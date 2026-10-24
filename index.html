@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FindLT – Lose nothing. Find everything.</title>
+<style>
+:root{--bg:#ffffff;--soft:#f0f5ff;--card:#ffffff;--text:#0a1f44;--muted:#566486;--blue:#1d4ed8;--blue2:#3b82f6;--border:#dbe5fb;--shadow:0 10px 30px rgba(29,78,216,.12);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#07122b;--soft:#0b1a3b;--card:#0f2147;--text:#f2f6ff;--muted:#9fb0d6;--blue:#60a5fa;--blue2:#3b82f6;--border:#1c3366;--shadow:none}}
+:root[data-theme="dark"]{--bg:#07122b;--soft:#0b1a3b;--card:#0f2147;--text:#f2f6ff;--muted:#9fb0d6;--blue:#60a5fa;--blue2:#3b82f6;--border:#1c3366;--shadow:none}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+.wrap{max-width:960px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+.logo{display:flex;align-items:center;gap:8px;font-weight:800;font-size:1.4rem;letter-spacing:-.5px}
+.logo b{color:var(--blue)}
+.logo svg{width:32px;height:38px}
+nav a.l{color:var(--muted);text-decoration:none;font-weight:600;font-size:.95rem;margin-left:16px}
+.hero{text-align:center;padding:44px 0 36px}
+.tag{display:inline-block;background:var(--soft);color:var(--blue);font-weight:700;font-size:.85rem;padding:6px 14px;border-radius:999px;margin-bottom:18px}
+h1{font-size:clamp(2.1rem,7vw,3.6rem);line-height:1.08;margin:0 0 16px;letter-spacing:-1px}
+h1 em{font-style:normal;color:var(--blue)}
+.lead{color:var(--muted);font-size:1.1rem;max-width:580px;margin:0 auto 26px}
+.btn{display:inline-block;background:var(--blue2);color:#fff;border:0;padding:14px 26px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer}
+.btn.alt{background:transparent;color:var(--blue);border:2px solid var(--blue);margin-left:8px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:34px}
+.stats div{background:var(--soft);border-radius:16px;padding:16px 8px}
+.stats b{display:block;font-size:1.5rem;color:var(--blue)}
+.stats span{font-size:.85rem;color:var(--muted)}
+section{padding:40px 0}
+h2{font-size:1.7rem;margin:0 0 8px;letter-spacing:-.5px}
+.sub{color:var(--muted);margin:0 0 22px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.card b{display:block;margin-bottom:6px}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.num{display:inline-flex;width:32px;height:32px;border-radius:50%;background:var(--blue2);color:#fff;font-weight:800;align-items:center;justify-content:center;margin-bottom:10px}
+.band{background:var(--soft)}
+.demo{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media(min-width:760px){.demo{grid-template-columns:1fr 1fr}}
+.phone{background:#0a1f44;border-radius:36px;padding:14px;max-width:340px;margin:0 auto;width:100%;box-shadow:0 20px 40px rgba(10,31,68,.35)}
+.screen{background:#f4f8ff;border-radius:26px;padding:16px;color:#0a1f44;text-align:center}
+.items{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.items button{border:1px solid #c9d8fa;background:#fff;color:#0a1f44;border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:600;cursor:pointer}
+.items button.on{background:#1d4ed8;color:#fff;border-color:#1d4ed8}
+.radar{position:relative;width:210px;height:210px;margin:6px auto;border-radius:50%;background:radial-gradient(circle,#fff 0 30%,#e3ecff 31% 32%,#fff 33% 62%,#e3ecff 63% 64%,#fff 65%);border:2px solid #c9d8fa}
+.radar .n{position:absolute;top:4px;left:50%;transform:translateX(-50%);font-size:.7rem;font-weight:800;color:#1d4ed8}
+.arrow{position:absolute;inset:0;transition:transform .15s linear}
+.arrow svg{width:100%;height:100%}
+.pulse{position:absolute;inset:0;border-radius:50%;border:3px solid #3b82f6;opacity:0;pointer-events:none}
+.ringing .pulse{animation:p 1s ease-out infinite}
+@keyframes p{0%{transform:scale(.4);opacity:.9}100%{transform:scale(1.1);opacity:0}}
+.dist{font-size:2.2rem;font-weight:800;color:#1d4ed8;line-height:1}
+.dir{font-size:.95rem;color:#566486;margin:4px 0 10px;min-height:2.6em}
+.found{color:#047857;font-weight:800}
+.ctrl{text-align:left;margin-top:10px;font-size:.8rem;color:#566486;font-weight:600}
+.ctrl input{width:100%;accent-color:#1d4ed8}
+.ring{width:100%;margin-top:12px}
+.steps li{margin-bottom:10px;color:var(--muted)}
+.steps b{color:var(--text)}
+.scroll{overflow-x:auto}
+table{width:100%;min-width:480px;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--border);font-size:.95rem}
+th{background:var(--soft)}
+td.w{color:var(--blue);font-weight:700}
+.price{text-align:center}
+.price .big{font-size:2.2rem;font-weight:800;color:var(--blue)}
+.price small{color:var(--muted)}
+.pop{border:2px solid var(--blue2)}
+.cta{text-align:center;padding:48px 20px;margin:20px 0;border-radius:26px;background:linear-gradient(135deg,#1d4ed8,#3b82f6);color:#fff}
+.cta .btn{background:#fff;color:#1d4ed8;margin-top:14px}
+footer{text-align:center;color:var(--muted);font-size:.85rem;padding:24px 0 32px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+<div class="logo"><svg viewBox="0 0 32 38" aria-hidden="true"><path d="M16 1C8 1 2 7 2 14.5 2 24 16 37 16 37S30 24 30 14.5C30 7 24 1 16 1z" fill="#1d4ed8"/><circle cx="16" cy="14.5" r="6" fill="#fff"/><circle cx="16" cy="14.5" r="2.5" fill="#3b82f6"/></svg><span>Find<b>LT</b></span></div>
+<div><a class="l" href="#demo">Demo</a><a class="l" href="#buy">Packs</a></div>
+</nav>
+
+<header class="hero">
+<span class="tag">Tag LT · Smart tracking for everything</span>
+<h1>Lose nothing.<br><em>Find everything.</em></h1>
+<p class="lead">From keys to jackets, put a tiny Tag LT on anything. Our app tells you which direction to walk, how far it is, and rings it for you.</p>
+<a class="btn" href="#demo">Try the live demo</a><a class="btn alt" href="#buy">See packs</a>
+<div class="stats">
+<div><b>1.5 g</b><span>per tag</span></div>
+<div><b>1 year</b><span>battery life</span></div>
+<div><b>&lt; €2</b><span>per tag in packs</span></div>
+</div>
+</header>
+</div>
+
+<div class="band"><div class="wrap"><section id="demo">
+<h2>Live demo</h2>
+<p class="sub">Pick an item, turn your phone (or drag the slider) and follow the arrow.</p>
+<div class="demo">
+<div class="phone"><div class="screen">
+<div class="items" id="items"></div>
+<div class="radar" id="radar"><span class="n">N</span><div class="pulse"></div>
+<div class="arrow" id="arrow"><svg viewBox="0 0 210 210"><path d="M105 26 L128 92 L105 80 L82 92 Z" fill="#1d4ed8"/><circle cx="105" cy="105" r="9" fill="#3b82f6"/></svg></div></div>
+<div class="dist" id="dist">12 m</div>
+<div class="dir" id="dir"></div>
+<div class="ctrl"><label>Turn the phone <span id="hv">0°</span><input type="range" id="head" min="0" max="359" value="0"></label></div>
+<div class="ctrl"><label>Walk closer<input type="range" id="walk" min="0" max="100" value="0"></label></div>
+<button class="btn ring" id="ringBtn">🔔 Ring my tag</button>
+<button class="btn ring alt" id="compBtn" style="margin-left:0">📱 Use my phone’s compass</button>
+</div></div>
+<div>
+<h3 style="margin-top:0">How the demo works</h3>
+<ol class="steps">
+<li><b>Choose</b> a tagged item: keys, jacket, backpack or remote.</li>
+<li><b>Turn</b> your phone: the arrow always points toward the tag, like a compass.</li>
+<li><b>Walk</b> toward it: the distance counts down in real time.</li>
+<li><b>Ring it</b> when you’re close: the tag beeps so you can spot it.</li>
+</ol>
+<p class="sub">In the real app, the position comes from Bluetooth signals between your phone and the tag.</p>
+</div>
+</div>
+</section></div></div>
+
+<div class="wrap">
+<section>
+<h2>The problem</h2>
+<p class="sub">Everyone loses things. Nobody wants to pay €30 per tracker.</p>
+<div class="grid">
+<div class="card"><b>Time wasted</b><p>Minutes lost every day searching for keys, bags and clothes.</p></div>
+<div class="card"><b>Too expensive</b><p>Current trackers are only worth it for a few valuable items.</p></div>
+<div class="card"><b>Too bulky</b><p>You can’t clip a big tracker inside a jacket or a T-shirt.</p></div>
+</div>
+</section>
+
+<section>
+<h2>Our idea: a tag for everything</h2>
+<p class="sub">Cheap, tiny tags sold in big packs, so even clothes can be tracked.</p>
+<div class="grid">
+<div class="card"><div class="num">1</div><b>Stick it</b><p>Slip a tag in a pocket, a seam or a keyring.</p></div>
+<div class="card"><div class="num">2</div><b>Configure it</b><p>Name it in the app: “Blue jacket”, “Bike keys”…</p></div>
+<div class="card"><div class="num">3</div><b>Find it</b><p>Follow the arrow, then ring it when you’re close.</p></div>
+</div>
+</section>
+
+<section>
+<h2>Why FindLT wins</h2>
+<div class="scroll"><table>
+<tr><th></th><th>FindLT Tag LT</th><th>Typical tracker</th></tr>
+<tr><td>Size</td><td class="w">Smaller than a coin</td><td>Bulky</td></tr>
+<tr><td>Price per item</td><td class="w">The most affordable</td><td>€25–35</td></tr>
+<tr><td>Use case</td><td class="w">Keys, clothes, bags, anything</td><td>A few valuables</td></tr>
+<tr><td>Battery</td><td class="w">Up to 1 year</td><td>Often fixed</td></tr>
+</table></div>
+</section>
+
+<section>
+<h2>Honest answers</h2>
+<div class="grid">
+<div class="card"><b>What about the battery?</b><p>It lasts up to a year, and the app warns you well before it runs out.</p></div>
+<div class="card"><b>What about privacy?</b><p>Your data is encrypted and your location is never shared without your permission.</p></div>
+</div>
+</section>
+
+<section id="buy" class="price">
+<h2>Packs made for everyone</h2>
+<p class="sub">Buy in bulk, configure everything later in the app.</p>
+<div class="grid">
+<div class="card"><b>Starter</b><div class="big">€24.90</div><small>10 tags · €2.49 each</small></div>
+<div class="card pop"><b>Family</b><div class="big">€59.90</div><small>30 tags · €2.00 each · Most popular</small></div>
+<div class="card"><b>Wardrobe</b><div class="big">€149</div><small>100 tags · €1.49 each</small></div>
+</div>
+</section>
+
+<div class="cta">
+<h2 style="margin:0 0 8px">Never say “Where are my keys?” again.</h2>
+<p style="margin:0">Join the FindLT adventure.</p>
+<a class="btn" href="#buy">Back FindLT</a>
+</div>
+<footer>© 2026 FindLT · School project</footer>
+</div>
+
+<script>
+var ITEMS=[
+{n:"🔑 Keys",b:315,d:12,r:"Living room"},
+{n:"🧥 Jacket",b:80,d:7,r:"Bedroom"},
+{n:"🎒 Backpack",b:200,d:15,r:"Hallway"},
+{n:"📺 Remote",b:20,d:4,r:"Sofa"}];
+var cur=0,heading=0,walk=0,ringTimer=null,ac=null;
+var $=function(i){return document.getElementById(i)};
+function card(a){var w=["North","North-East","East","South-East","South","South-West","West","North-West"];return w[Math.round(a/45)%8]}
+function render(){
+var it=ITEMS[cur],d=Math.max(0,it.d*(1-walk/100));
+var rel=((it.b-heading)%360+360)%360;
+$("arrow").style.transform="rotate("+rel+"deg)";
+$("dist").textContent=d<1?"Here!":(Math.round(d*10)/10)+" m";
+var t;
+if(d<1){t='<span class="found">You found it! Ring it to be sure.</span>'}
+else{var turn=rel<15||rel>345?"Straight ahead":(rel<180?"Turn right":"Turn left");
+t=card(it.b)+" · "+it.r+"<br>"+turn}
+$("dir").innerHTML=t;$("hv").textContent=Math.round(heading)+"°";
+}
+function buildItems(){
+var el=$("items");el.innerHTML="";
+ITEMS.forEach(function(it,i){var b=document.createElement("button");b.textContent=it.n;if(i===cur)b.className="on";
+b.onclick=function(){cur=i;$("walk").value=0;walk=0;buildItems();render()};el.appendChild(b)})}
+$("head").oninput=function(){heading=+this.value;render()};
+$("walk").oninput=function(){walk=+this.value;render()};
+function beep(){try{ac=ac||new (window.AudioContext||window.webkitAudioContext)();var o=ac.createOscillator(),g=ac.createGain();o.frequency.value=1040;g.gain.value=.15;o.connect(g);g.connect(ac.destination);o.start();o.stop(ac.currentTime+.18)}catch(e){}
+try{navigator.vibrate&&navigator.vibrate(120)}catch(e){}}
+$("ringBtn").onclick=function(){
+var r=$("radar");
+if(ringTimer){clearInterval(ringTimer);ringTimer=null;r.classList.remove("ringing");this.textContent="🔔 Ring my tag";return}
+var self=this,n=0;self.textContent="🔕 Stop ringing";r.classList.add("ringing");beep();
+ringTimer=setInterval(function(){n++;beep();if(n>=8){clearInterval(ringTimer);ringTimer=null;r.classList.remove("ringing");self.textContent="🔔 Ring my tag"}},600)};
+function onOri(e){var h=typeof e.webkitCompassHeading==="number"?e.webkitCompassHeading:(e.alpha!=null?360-e.alpha:null);
+if(h==null)return;heading=h;$("head").value=Math.round(h)%360;render()}
+$("compBtn").onclick=function(){
+var self=this;
+try{
+if(window.DeviceOrientationEvent&&typeof DeviceOrientationEvent.requestPermission==="function"){
+DeviceOrientationEvent.requestPermission().then(function(s){if(s==="granted"){window.addEventListener("deviceorientation",onOri,true);self.textContent="✅ Compass on"}else{self.textContent="Compass blocked: use the slider"}}).catch(function(){self.textContent="Compass unavailable: use the slider"})}
+else if(window.DeviceOrientationEvent){window.addEventListener("deviceorientationabsolute",onOri,true);window.addEventListener("deviceorientation",onOri,true);self.textContent="✅ Compass on"}
+else{self.textContent="Compass unavailable: use the slider"}
+}catch(e){self.textContent="Compass unavailable: use the slider"}};
+buildItems();render();
+</script>
+</body>
+</html>
